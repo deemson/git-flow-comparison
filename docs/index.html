@@ -256,6 +256,7 @@ nothing to commit, working tree clean</code></pre>
   <pre><code class="shell">git rebase --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;</code></pre>
 </section>
 <section>
+  <h4>How rebase works</h4>
   <pre><code class="shell">git rebase --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;</code></pre>
   <ol>
     <li class="fragment fade-up">git checkout &lt;branch&gt;</li>
@@ -271,27 +272,36 @@ nothing to commit, working tree clean</code></pre>
       <pre><code class="shell">git rebase --onto master experiment feature</code></pre>
     </div>
     <div class="fragment fade-up">
+      <div>1. git checkout &lt;branch&gt;</div>
       <pre><code class="shell">git checkout feature</code></pre>
     </div>
-    <div class="fragment fade-up">save commits f 1-f 2 to temporary area</div>
+    <div class="fragment fade-up">
+      <div>2. save commits in &lt;upstream&gt;..HEAD</div>
+      <div>save commits f 1-f 2 to temporary area</div>
+    </div>
     <canvas id="rb-bas1"></canvas>
   </section>
   <section>
     <div>
+      <div>3. git reset --hard &lt;upstream&gt;</div>
       <pre><code class="shell">git reset --hard experiment</code></pre>
     </div>
     <div class="fragment fade-up">
+      <div>4. git checkout &lt;new-base&gt;</div>
       <pre><code class="shell">git checkout master</code></pre>
     </div>
     <canvas id="rb-bas2"></canvas>
   </section>
   <section>
+    <div>5. apply saved commits in &lt;upstream&gt;..HEAD</div>
     <canvas id="rb-bas3"></canvas>
   </section>
   <section>
+    <div>5. apply saved commits in &lt;upstream&gt;..HEAD</div>
     <canvas id="rb-bas4"></canvas>
   </section>
   <section>
+    <div>5. apply saved commits in &lt;upstream&gt;..HEAD</div>
     <canvas id="rb-bas5"></canvas>
   </section>
 </section>

@@ -198,6 +198,7 @@ section
     pre
         code.shell git rebase --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;
 section
+    h4 How rebase works
     pre
         code.shell git rebase --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;
     ol
@@ -212,23 +213,31 @@ section
             pre
                 code.shell git rebase --onto master experiment feature
         div.fragment.fade-up
+            div 1. git checkout &lt;branch&gt;
             pre
                 code.shell git checkout feature
-        div.fragment.fade-up save commits f 1-f 2 to temporary area
+        div.fragment.fade-up
+            div 2. save commits in &lt;upstream&gt;..HEAD
+            div save commits f 1-f 2 to temporary area
         canvas#rb-bas1
     section
         div
+            div 3. git reset --hard &lt;upstream&gt;
             pre
                 code.shell git reset --hard experiment
         div.fragment.fade-up
+            div 4. git checkout &lt;new-base&gt;
             pre
                 code.shell git checkout master
         canvas#rb-bas2
     section
+        div 5. apply saved commits in &lt;upstream&gt;..HEAD
         canvas#rb-bas3
     section
+        div 5. apply saved commits in &lt;upstream&gt;..HEAD
         canvas#rb-bas4
     section
+        div 5. apply saved commits in &lt;upstream&gt;..HEAD
         canvas#rb-bas5
 section
     h3 Warning

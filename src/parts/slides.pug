@@ -1,0 +1,413 @@
+section
+    h3 How to use the presentation
+    ul
+        li Press "?" button to view all keyboard shortcuts
+        li Use "ESC"!
+        li Note, that sometimes it's possible to navigate "down"
+        li Keep track of navigate buttons at the bottom right corner
+section
+    h1 Git Flow Comparison
+    br
+    br
+    h6 by Dmytro Kurkin
+section
+    h2 Branching Flow
+section
+    section
+        div You have a repo with a simple master branch
+        canvas#br1
+    section
+        div You start working on a feature
+        canvas#br2
+    section
+        div Commit a few fixes
+        canvas#br3
+    section
+        div Somebody merges another feature
+        canvas#br4
+    section
+        div You merge the fresh master to stay current
+        canvas#br5
+    section
+        div You fix merge conflicts
+        canvas#br6
+    section
+        div You merge your changes to master
+        canvas#br7
+section
+    div When there are many people, things are starting to get rough
+    canvas#br-fail
+section
+    h2 Rebase Flow
+section
+    section
+        div You have a repo with a simple master branch
+        canvas#rb1
+    section
+        div You start working on a feature
+        canvas#rb2
+    section
+        div Commit a few fixes
+        canvas#rb3
+    section
+        div Somebody merges another feature
+        canvas#rb4
+    section
+        div You rebase over the latest master
+        canvas#rb5
+    section
+        div You squash all your commits into a single commit
+        canvas#rb6
+    section
+        div You do a fast forward merge
+        canvas#rb7
+section
+    h2 Diving into Rebase
+section
+    img(src='assets/git-data-transport-commands.png')
+section
+    h3 Diving into Rebase
+    br
+    h3 Part 1
+    br
+    h2 Reset
+section
+    div 3 types of resets in Git
+    pre
+        code.shell git reset --soft
+    pre
+        code.shell git reset --mixed
+    pre
+        code.shell git reset --hard
+section
+    h3 Example
+section
+    div Let's init an empty git repo
+        pre
+            code.shell git init
+    div.fragment.fade-up
+        div Then create three empty files
+        pre
+            code.shell touch file1 && touch file2 && touch file3
+    div.fragment.fade-up
+        div And commit them in three different commits
+        pre
+            code.shell
+                include ../snippets/3commits.sh
+section
+    section
+        div git log before reset
+        canvas#reset1
+    section
+        pre
+            code.shell git reset [--soft or --mixed -- or hard] HEAD~2
+        canvas#reset2
+section
+    div Soft Reset
+    div
+        pre
+            code.shell git reset HEAD~2 --soft
+    div.fragment.fade-up
+        pre
+            code.shell git status
+        pre
+            code.text
+                include ../snippets/3commits-reset-soft-status.git
+section
+    div Mixed reset (default reset)
+    div
+        pre
+            code.shell git reset HEAD~2 --mixed
+    div.fragment.fade-up
+        div Or simply
+            pre
+                code.shell git reset HEAD~2
+    div.fragment.fade-up
+        pre
+            code.shell git status
+        pre
+            code.text
+                include ../snippets/3commits-reset-mixed-status.git
+section
+    div Soft
+    pre
+        code.text
+            include ../snippets/3commits-reset-soft-status.git
+    h3 VS
+    div Mixed
+    pre
+        code.text
+            include ../snippets/3commits-reset-mixed-status.git
+section
+    div Hard Reset
+    div
+        pre
+            code.shell git reset HEAD~2 --hard
+    div.fragment.fade-up
+        pre
+            code.shell git status
+        pre
+            code.text
+                include ../snippets/3commits-reset-hard-status.git
+    div.fragment.fade-up
+        pre
+            code.shell ls
+        pre
+            code.text file1
+section
+    h3 Warning
+section
+    section
+        div It may look like reset is "cutting" commits away
+        canvas#reset3
+    section
+        div This happens only when the HEAD is the last commit in history
+        canvas#reset4
+section
+    section
+        div Imagine that the HEAD is on "feature 1" branch
+        div.fragment.fade-up i.e., not the last in history: there is "feature 2" branch commits after
+        canvas#reset5
+    section
+        div "feature 1" branch is rebased over "master", but commits are still there
+        canvas#reset6
+section
+    h3 Reset: Take Away notes
+    ul
+        li
+            div Soft &mdash; reset local repo, but leave index and workspace as they are
+            pre
+                code.shell git reset --soft &lt;commit&gt;
+        li
+            div Mixed &mdash; reset local repo and index, but leave workspace as it is
+            pre
+                code.shell git reset &lt;commit&gt;
+        li
+            div Hard &mdash; reset local repo, index and workspace
+            pre
+                code.shell git reset --hard &lt;commit&gt;
+section
+    h3 Diving into Rebase
+    br
+    h3 Part 2
+    br
+    h2 Rebasing Basics
+section
+    div Your everyday rebase command
+    pre
+        code.shell git rebase --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;
+section
+    pre
+        code.shell git rebase --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;
+    ol
+        li.fragment.fade-up git checkout &lt;branch&gt;
+        li.fragment.fade-up save commits in &lt;upstream&gt;..HEAD
+        li.fragment.fade-up git reset --hard &lt;upstream&gt;
+        li.fragment.fade-up git checkout &lt;new-base&gt;
+        li.fragment.fade-up apply saved commits in &lt;upstream&gt;..HEAD
+section
+    section
+        div
+            pre
+                code.shell git rebase --onto master experiment feature
+        div.fragment.fade-up
+            pre
+                code.shell git checkout feature
+        div.fragment.fade-up save commits f 1-f 2 to temporary area
+        canvas#rb-bas1
+    section
+        div
+            pre
+                code.shell git reset --hard experiment
+        div.fragment.fade-up
+            pre
+                code.shell git checkout master
+        canvas#rb-bas2
+    section
+        canvas#rb-bas3
+    section
+        canvas#rb-bas4
+    section
+        canvas#rb-bas5
+section
+    h3 Warning
+section
+    section
+        pre
+            code.shell git rebase --onto master master feature
+        canvas#rb-w1
+    section
+        canvas#rb-w2
+section
+    h3 When there are conflicts
+section
+    section
+        canvas#rb-con1
+    section
+        canvas#rb-con2
+    section
+        canvas#rb-con3
+    section
+        div Rebase stops. You have two options
+        ol
+            li.fragment.fade-up git rebase --abort
+            li.fragment.fade-up resolve conflicts and git rebase --continue
+    section
+        div To resolve conflicts you need to
+        ul
+            li.fragment.fade-up edit conflicting files and resolve all of the conflicts
+            li.fragment.fade-up git add all the resolved files
+            li.fragment.fade-up git rebase --continue
+    section
+        canvas#rb-con4
+    section
+        canvas#rb-con5
+section
+    h3 Rebase: Take Away Notes
+    ul(style='width: 90%;')
+        li
+            pre
+                code.shell git checkout &lt;feature-branch&gt;
+        li
+            ul
+                li
+                    div If you rebase over target
+                    pre
+                        code.shell git rebase &lt;target&gt;
+                li
+                    div If you rebase to somewhere else
+                    pre
+                        code.shell git rebase --onto &lt;somewhere-else&gt; &lt;commit-to-compare&gt;
+section
+    h3 Diving into Rebase
+    br
+    h3 Part 3
+    br
+    h2 Interactive Rebase
+section
+    pre
+        code.shell git rebase --interactive --onto &lt;new-base&gt; &lt;upstream&gt; &lt;branch&gt;
+section
+    div Rebase your last three commits on master
+    pre
+        code.shell git rebase -i --onto master HEAD~3
+section
+    h3 Example
+section
+    pre
+        code.shell git init
+    pre
+        code.shell touch file1 && touch file2 && touch file3
+    pre
+        code.shell
+            include ../snippets/3commits.sh
+section
+    section
+        pre
+            code.shell git rebase -i HEAD~2
+    section
+        pre
+            code.text
+                include ../snippets/irebase1.git
+    section
+        pre
+            code.text
+                include ../snippets/irebase2.git
+    section
+        pre
+            code.text
+                include ../snippets/irebase3.git
+    section
+        pre
+            code.text
+                include ../snippets/irebase4.git
+section
+    h3 Diving into Rebase
+    br
+    h3 Part 4
+    br
+    h2 Fast Forward
+section
+    div.fragment.fade-up Merge will fast forward when it's able or do a merge commit otherwise
+    pre
+        code.shell git merge &lt;hash&gt;
+    div.fragment.fade-up No-ff will always make a merge commit
+    pre
+        code.shell git merge --no-ff &lt;hash&gt;
+    div.fragment.fade-up Ff-only will try to do a fast forward and fail if it's not possible
+    pre
+        code.shell git merge --ff-only &lt;hash&gt;
+section
+    section
+        div Fast forward merge is possible
+        canvas#ff1
+    section
+        canvas#ff2
+    section
+        div Using --no-ff flag will force a merge commit even though fast forward is possible
+        canvas#ff3
+section
+    section
+        div Fast forward merge is not possible
+        div.fragment.fade-up Solution: rebase (and squash too!)
+        canvas#rbff1
+    section
+        div rebase & squash
+        canvas#rbff2
+    section
+        div fast forward merge
+        canvas#rbff3
+section
+    h2 Rebase Flow
+section
+    section
+        canvas#rb21
+    section
+        canvas#rb22
+    section
+        canvas#rb23
+    section
+        canvas#rb24
+    section
+        canvas#rb25
+    section
+        canvas#rb26
+    section
+        canvas#rb27
+section
+    h2 Rebase Flow Pros
+section
+    ul(style='width: 90%;')
+        li Clean history
+        li.fragment.fade-up No excessive commits
+        li.fragment.fade-up Repo is easy to navigate
+section
+    h2 Rebase Flow Cons
+section
+    ul(style='width: 90%;')
+        li Rebase is destructive
+        li.fragment.fade-up Authoring is lost
+        li.fragment.fade-up Flow is harder to execute
+section
+    h2 When to use Rebase?
+section
+    ul(style='width: 90%;')
+        li Feature branch developed by single person
+        li.fragment.fade-up To remove excessive commits
+        li.fragment.fade-up To move the fork point of the branch
+section
+    h2 When not to use Rebase?
+section
+    ul(style='width: 90%;')
+        li Multiple people are working on a feature branch
+        li.fragment.fade-up When history graph is non linear
+section
+    h2 Gitlab & Rebase Flow
+section
+    img(src='assets/gitlab-ffmerge.png')
+section
+    img(src='assets/gitlab-rebase.png')
+section
+    img(src='assets/gitlab-protect.png')
+section
+    h3 Questions

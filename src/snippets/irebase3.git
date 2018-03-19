@@ -1,0 +1,25 @@
+# This is a combination of 2 commits.
+# This is the 1st commit message:
+
+file2
+
+# This is the commit message #2:
+
+file3
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Wed Feb 21 17:40:46 2018 +0200
+#
+# interactive rebase in progress; onto b6baa92
+# Last commands done (2 commands done):
+#    pick ee1b739 file2
+#    squash 36e1958 file3
+# No commands remaining.
+# You are currently rebasing branch 'master' on 'b6baa92'.
+#
+# Changes to be committed:
+#	new file:   file2
+#	new file:   file3
+#
